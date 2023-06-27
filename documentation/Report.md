@@ -13,9 +13,11 @@
 ## Результаты выполнения автотестов:
 
 **Отчет Gradle**
+
 ![Gradle.jpg](Gradle.jpg)
 
 **Отчет Allure**
+
 ![Allure.jpg](Allure.jpg)
 
 ## Общие рекомендации
