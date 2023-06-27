@@ -22,7 +22,7 @@
     ````
 4. Во втором терминале запустить SUT командой
 
-- для конфигурации с базой данный MySql:
+- для конфигурации с базой данный MySQL:
 
  ````
  java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar
