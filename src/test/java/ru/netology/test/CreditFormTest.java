@@ -79,6 +79,15 @@ public class CreditFormTest {
     }
 
     @Test
+    @Name("Проверка отображения уведомления о неверном сроке карты в поле месяц при покупке в кредит")
+    void shouldNotBuyTourWhenMonthIsZeroForCreditForm() {
+        var PaymentMethod = new PaymentMethod();
+        var payment = PaymentMethod.buttonByCredit();
+        payment.inputDataByCredit(DataHelper.getApprovedCardWithWrongMonth());
+        payment.checkFieldMonthErrorWithInvalidValueForCreditForm();
+    }
+
+    @Test
     @Name("Пустые поля в форме покупка в кредит, проверка отображения уведомлений о пустых полях")
     void shouldBeNotificationsDisplayedForAllFieldsCreditForm() {
         var PaymentMethod = new PaymentMethod();
@@ -107,12 +116,5 @@ public class CreditFormTest {
         payment.checkWrongYearErrorForCreditForm();
     }
 
-    @Test
-    @Name("Проверка отображения уведомления о неверном сроке карты в поле месяц при покупке в кредит")
-    void shouldNotBuyTourWhenMonthIsZeroForCreditForm() {
-        var PaymentMethod = new PaymentMethod();
-        var payment = PaymentMethod.buttonByCredit();
-        payment.inputDataByCredit(DataHelper.getApprovedCardWithWrongMonth());
-        payment.checkFieldMonthErrorWithInvalidValueForCreditForm();
-    }
+
 }

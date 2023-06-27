@@ -36,17 +36,6 @@ public class CardFormTest {
 
 
     @Test
-    @Name("Успешная покупка тура по действующей карте" +
-            "Проверка отображения транзакции в базе данных по действующей карте со статусом ОДОБРЕНО")
-    void shouldBuyTourWithApprovedCard() {
-        var PaymentMethod = new PaymentMethod();
-        var payment = PaymentMethod.buttonByCard();
-        payment.inputDataByCard(DataHelper.getApprovedCard());
-        payment.waitSuccessfulNotificationForCard();
-        Assertions.assertEquals("APPROVED", SQL.checkStatus());
-    }
-
-    @Test
     @Name("Отказ покупки по недействующей карте" +
             "Проверка отображения транзакции в базе данных по недействующей карте со статусом ОТКЛОНЕНО")
     void shouldNotBuyTourWithDeclinedCard() {
@@ -57,16 +46,24 @@ public class CardFormTest {
         Assertions.assertEquals("DECLINED", SQL.checkStatus());
     }
 
-
     @Test
-    @Name("Отказ в покупке по карте, отсутствующей в базе данных" +
-            "Проверка отображения транзакции в базе данных по отсутствующей карте со статусом ОТКЛОНЕНО")
-    void shouldNotBuyTourWithNonExistentCard() {
+    @Name("Проверка отображения уведомления об истекшем сроке карты в поле покупка по карте")
+    void shouldBeNotificationsAboutWrongDateForCardField() {
         var PaymentMethod = new PaymentMethod();
         var payment = PaymentMethod.buttonByCard();
-        payment.inputDataByCard(DataHelper.getCardNotExistInDataBase());
-        payment.waitErrorNotificationForCard();
-        Assertions.assertEquals("DECLINED", SQL.checkStatus());
+        payment.inputDataByCard(DataHelper.getApprovedCardWithWrongYear());
+        payment.checkWrongYearError();
+    }
+
+    @Test
+    @Name("Успешная покупка тура по действующей карте" +
+            "Проверка отображения транзакции в базе данных по действующей карте со статусом ОДОБРЕНО")
+    void shouldBuyTourWithApprovedCard() {
+        var PaymentMethod = new PaymentMethod();
+        var payment = PaymentMethod.buttonByCard();
+        payment.inputDataByCard(DataHelper.getApprovedCard());
+        payment.waitSuccessfulNotificationForCard();
+        Assertions.assertEquals("APPROVED", SQL.checkStatus());
     }
 
     @Test
@@ -102,6 +99,17 @@ public class CardFormTest {
     }
 
     @Test
+    @Name("Отказ в покупке по карте, отсутствующей в базе данных" +
+            "Проверка отображения транзакции в базе данных по отсутствующей карте со статусом ОТКЛОНЕНО")
+    void shouldNotBuyTourWithNonExistentCard() {
+        var PaymentMethod = new PaymentMethod();
+        var payment = PaymentMethod.buttonByCard();
+        payment.inputDataByCard(DataHelper.getCardNotExistInDataBase());
+        payment.waitErrorNotificationForCard();
+        Assertions.assertEquals("DECLINED", SQL.checkStatus());
+    }
+
+    @Test
     @Name("Проверка отображения уведомления о неверном сроке карты в поле месяц при покупке по карте")
     void shouldNotBuyTourWhenMonthIsZeroForCardForm() {
         var PaymentMethod = new PaymentMethod();
@@ -110,12 +118,5 @@ public class CardFormTest {
         payment.checkFieldMonthErrorWithInvalidValue();
     }
 
-    @Test
-    @Name("Проверка отображения уведомления об истекшем сроке карты в поле покупка по карте")
-    void shouldBeNotificationsAboutWrongDateForCardField() {
-        var PaymentMethod = new PaymentMethod();
-        var payment = PaymentMethod.buttonByCard();
-        payment.inputDataByCard(DataHelper.getApprovedCardWithWrongYear());
-        payment.checkWrongYearError();
-    }
+
 }

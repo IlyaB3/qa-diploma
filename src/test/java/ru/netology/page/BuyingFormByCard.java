@@ -18,16 +18,16 @@ public class BuyingFormByCard {
     private SelenideElement yearField = $("[placeholder='22']");
     private SelenideElement cardHolderField = $(byText("Владелец")).parent().$("[class='input__control']");
     private SelenideElement cvcField = $("[placeholder='999']");
+    private SelenideElement wrongFormatErrorCardHolderField = $$("[class='input__sub']")
+            .findBy(Condition.text("Поле обязательно для заполнения"));
+    private SelenideElement fieldMonthErrorWithInvalidValue = $$("[class='input__sub']")
+            .findBy(Condition.text("Неверно указан срок действия карты"));
     private SelenideElement button = $$("[class='button__content']").findBy(Condition.text("Продолжить"));
     private SelenideElement successNotification = $$("[class=notification__content]")
             .findBy(Condition.text("Операция одобрена Банком."));
     private SelenideElement errorNotification = $$("[class=notification__content]")
             .findBy(Condition.text("Ошибка! Банк отказал в проведении операции."));
     private SelenideElement wrongFormatError = $$("[class='input__sub']").findBy(Condition.text("Неверный формат"));
-    private SelenideElement wrongFormatErrorCardHolderField = $$("[class='input__sub']")
-            .findBy(Condition.text("Поле обязательно для заполнения"));
-    private SelenideElement fieldMonthErrorWithInvalidValue = $$("[class='input__sub']")
-            .findBy(Condition.text("Неверно указан срок действия карты"));
     private SelenideElement fieldYearErrorWithInvalidValue = $$("[class='input__sub']")
             .findBy(Condition.text("Неверно указан срок действия карты"));
     private SelenideElement wrongYearError = $$("[class='input__sub']")
